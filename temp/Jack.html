@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="authoring-tool" content="Adobe_Animate_CC">
+<title>Jack</title>
+<!-- write your code here -->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="Jack.js?1707171835198"></script>
+<script src="animationController.js"></script>
+<script>
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+function init() {
+	canvas = document.getElementById("canvas");
+	anim_container = document.getElementById("animation_container");
+	dom_overlay_container = document.getElementById("dom_overlay_container");
+	var comp=AdobeAn.getComposition("C081E1CE8D5D438B8B557157995AD237");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	exportRoot = new lib.Untitled4();
+	stage = new lib.Stage(canvas);	
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.framerate = 18;//18;//lib.properties.fps;
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+	let stoppedFrame;
+	let stoppedExportRoot;
+	let ExportRoot50;
+	var stopAnimation, stopAtFrame50, resumeAnimation, exportRoot;
+
+	stopAnimation = function() {
+		createjs.Ticker.removeEventListener("tick", stage);
+		stoppedExportRoot = exportRoot;
+	};
+	//Code to support hidpi screens and responsive scaling.
+	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+
+	var stopAnimation, stopAtFrame50, resumeAnimation, exportRoot, changeFPS;
+
+	stopAnimation = function() {
+		createjs.Ticker.removeEventListener("tick", stage);
+		stoppedExportRoot = exportRoot;
+	};
+
+	stopAtFrame50 = function() {
+		console.log(exportRoot);
+	};
+		
+	resumeAnimation = function() {
+		stage.addChild(stoppedExportRoot);
+		createjs.Ticker.framerate =  24;
+		createjs.Ticker.addEventListener("tick", stage);
+	};
+
+}
+
+changeFPS = function() {
+		createjs.Ticker.removeEventListener("tick", stage);
+		stoppedExportRoot = exportRoot;
+		console.log("Test");
+		var newFramerate = document.getElementById("framerateInput").value;
+		if (!isNaN(newFramerate)) {
+			stage.addChild(stoppedExportRoot);
+			createjs.Ticker.framerate = parseFloat(newFramerate);
+			createjs.Ticker.addEventListener("tick", stage);
+			console.log("Changed framerate to:", newFramerate);
+		}
+	};
+</script>
+<!-- write your code here -->
+<body onload="init();">
+    <div id="animation_container">
+        <canvas id="canvas" width="800" height="800" style="position: absolute; display: block; background-color:rgba(64, 64, 64, 0.00);"></canvas>
+        <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:800px; height:800px; position: absolute; left: 0px; top: 0px; display: block;"></div>
+        <!-- Button in the top-right corner to stop the animation -->
+		
+		<button id="stopButton" onclick="stopAnimation()">Stop Animation</button>
+        <!-- Button in the top-right corner to stop the animation at frame 50 -->
+        <button id="stopAtFrame50Button" onclick="stopAtFrame50()">Stop at Frame 50</button>
+        <!-- Button in the top-right corner to resume the animation -->
+        <button id="resumeButton" onclick="resumeAnimation()">Resume Animation</button>
+		<div id="fps" style="position: absolute; top: 10px; right: 10px;">
+
+            <label for="framerateInput" id="setFramerate" style="color: white; font-weight: bold; margin-right: 5px;">Set Framerate:</label>
+            <input type="number" id="framerateInput" placeholder="Enter framerate" style="width: 60px;"/>
+            <button id="applyFramerate" onclick="changeFPS()" style="display: inline-block;">Apply</button>
+
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+	body {
+		margin: 0;
+	}
+
+	#animation_container {
+		background-color: rgba(64, 64, 64, 0.00);
+		width: 1536px;
+		height: 868px;
+		position: relative;
+	}
+
+	button {
+		position: absolute;
+		top: 10px; /* Adjust the top position as needed */
+	}
+
+	#fps {
+		margin-left: 750px;
+		margin-top: 25px;
+
+	}
+	#applyFramerate {
+		margin-top: -10px;
+		right: 200px;
+	}
+
+
+	#stopButton {
+		right: 10px; /* Adjust the right position as needed */
+	}
+
+	#stopAtFrame50Button {
+		right: 120px; /* Adjust the right position as needed */
+	}
+
+	#resumeButton {
+		right: 245px; /* Adjust the right position as needed */
+	}
+</style>

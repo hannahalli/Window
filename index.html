@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/index.js" defer></script>
+    <title>Hannah's Thesis</title>
+    <style>
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Change the z-index to change the order of the iframes */
+        #backgroundFrame {
+            z-index: 1;
+        }
+        #jackFrame {
+            z-index: 4;
+        }
+        #buttons {
+            z-index: 10001;
+        }
+        #animalFrame {
+            z-index: 3;
+        }
+        #books {
+            z-index: 7;
+        }
+        #fairyFlyFrame {
+            z-index: 1000; /* Highest z-index */
+        }
+        #stopbutton {
+            z-index: 3; 
+            position: absolute; 
+            right: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <iframe id="clouds" src="sky.html"></iframe>  
+    <!-- <iframe id="night" src="./night/nightSky.html"></iframe>  -->
+    <!-- <iframe id="sun" src="./sun/weather.html"></iframe> -->
+    <iframe id="backgroundFrame-2" src="./background-2/backgroud-2.html"></iframe>
+    <!-- Background iframe -->
+    <!-- <iframe id="pumpkin" src="./backpath/pumpkin.html"></iframe> -->
+    <iframe id="pumpkin" src="pump.html"></iframe>
+    <!--<iframe id="back" src="./temp/back.html"></iframe>-->
+    <!-- <iframe id="backgroundFrame" sr c="./background-1/background-1.html"></iframe> -->
+    <!-- <iframe id="animalFrame" src="./animals_frontTrees/animal.html"></iframe> -->
+    <!-- <iframe id="animalFrame" src="animal-01.html"></iframe> -->
+    <!-- Jack iframe on top of the background --> 
+    <!--<iframe id="jackFrame" src="./temp/jack.html"></iframe>-->
+    <!-- <iframe id="buttons" src="./buttons/buttons-temp1.html"></iframe> -->
+    <iframe id="buttons" src="interactive-03.html"></iframe>
+    <!--New Background, will be slow-->
+    <!-- <iframe id="buttons" src="backgroud-2Temp.html"></iframe>
+    <iframe id="buttons" src="background-3.html"></iframe>
+    <iframe id="buttons" src="forground.html"></iframe> -->
+    <!-- <iframe id="books" src="./servers/book.html"></iframe> -->
+    <!-- iframe for fairyFly.html -->
+    <iframe id="fairyFlyFrame" src="./fairyFly.html"></iframe>
+</body>
+</html>
